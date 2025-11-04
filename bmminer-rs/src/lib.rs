@@ -36,6 +36,17 @@ pub mod batch;
 // NEON-accelerated SHA-256 (2.5x faster on Cortex-A9)
 pub mod sha256_neon;
 
+// Zero-waste parallel validation
+#[cfg(feature = "api")]
+pub mod validation_pool;
+
+// BSV Node implementation (shares validation pool with miner)
+#[cfg(feature = "bsv-node")]
+pub mod bsv_node;
+
+#[cfg(feature = "bsv-node")]
+pub mod bsv_large_blocks;
+
 // Optional features
 #[cfg(feature = "api")]
 pub mod stratum;
@@ -49,3 +60,15 @@ pub use nonce_queue::NoncePipeline;
 pub use types::{MiningStats, Nonce, NonceStats};
 pub use multichain::{MultiChainController, S9_NUM_CHAINS};
 pub use batch::BatchProcessor;
+
+#[cfg(feature = "api")]
+pub use validation_pool::ValidationPool;
+
+#[cfg(feature = "bsv-node")]
+pub use bsv_node::{
+    BsvNode, Block, BlockHeader, Transaction, TxInput, TxOutput,
+    BlockchainStorage, MemoryBlockchain
+};
+
+#[cfg(feature = "bsv-node")]
+pub use bsv_large_blocks::{LargeBlockValidator, BlockValidationStats};

@@ -39,7 +39,8 @@ rand = "0.8"
 [features]
 default = []
 api = ["tokio", "serde", "serde_json", "ctrlc", "rayon"]
-full = ["api"]
+bsv-node = ["api"]  # BSV node requires validation pool (api feature)
+full = ["api", "bsv-node"]
 aggressive = ["api", "rayon"]  # All aggressive optimizations
 
 [[bench]]
